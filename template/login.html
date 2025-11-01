@@ -1,22 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login – Agricore</title>
-    <link rel="stylesheet" href="/static/login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – AgriCore</title>
+<link rel="stylesheet" href="/static/login.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Agricore</h2>
-        <!-- MESSAGE -->
-        <h2>Login</h2>
-        <form method="POST" action="/login">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <p><a href="/register">Need an account? Register</a></p>
-    </div>
+<nav class="navbar">
+<div class="logo">AgriCore</div>
+<div class="nav-links">
+<a href="/"><button class="nav-btn">Home</button></a>
+<a href="/register"><button class="nav-btn">Register</button></a>
+</div>
+</nav>
+
+<div class="login-wrapper">
+<div class="container">
+<div class="header-section">
+<h1 class="welcome-text">Welcome Back! 🌾</h1>
+<p class="subtitle">Login to access your smart farming dashboard</p>
+</div>
+<!-- MESSAGE -->
+<div class="form-container">
+<h2>Login</h2>
+<form method="POST" action="/login" id="loginForm">
+<div class="input-group">
+<label for="username">Username</label>
+<input type="text" name="username" id="username" placeholder="Enter your username" required>
+<span class="input-icon">👤</span>
+</div>
+<div class="input-group">
+<label for="password">Password</label>
+<input type="password" name="password" id="password" placeholder="Enter your password" required>
+<span class="input-icon">🔒</span>
+</div>
+<button type="submit" class="submit-btn">
+<span class="btn-text">Login</span>
+<span class="btn-arrow">→</span>
+</button>
+</form>
+<p class="register-link">Need an account? <a href="/register">Register here</a></p>
+</div>
+</div>
+
+<div class="decorative-plants">
+<div class="plant plant-1">🌱</div>
+<div class="plant plant-2">🌿</div>
+<div class="plant plant-3">🍃</div>
+</div>
+</div>
+
+<script>
+// Floating animation for input focus
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+  input.addEventListener('focus', function() {
+    this.parentElement.classList.add('focused');
+  });
+  
+  input.addEventListener('blur', function() {
+    if (this.value === '') {
+      this.parentElement.classList.remove('focused');
+    }
+  });
+});
+
+// Button ripple effect
+const submitBtn = document.querySelector('.submit-btn');
+submitBtn.addEventListener('click', function(e) {
+  const ripple = document.createElement('span');
+  ripple.classList.add('ripple');
+  this.appendChild(ripple);
+  
+  const rect = this.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  
+  setTimeout(() => ripple.remove(), 600);
+});
+
+// Form validation with animation
+const form = document.getElementById('loginForm');
+form.addEventListener('submit', function(e) {
+  const button = this.querySelector('.submit-btn');
+  button.classList.add('loading');
+  button.querySelector('.btn-text').textContent = 'Logging in...';
+});
+
+// Animated plants on load
+window.addEventListener('load', function() {
+  const plants = document.querySelectorAll('.plant');
+  plants.forEach((plant, index) => {
+    setTimeout(() => {
+      plant.style.opacity = '1';
+      plant.style.transform = 'translateY(0)';
+    }, index * 200);
+  });
+});
+
+// Add typing effect to welcome text
+const welcomeText = document.querySelector('.welcome-text');
+const text = welcomeText.textContent;
+welcomeText.textContent = '';
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    welcomeText.textContent += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 100);
+  }
+}
+
+setTimeout(typeWriter, 300);
+
+// Shake animation for empty fields
+form.addEventListener('submit', function(e) {
+  inputs.forEach(input => {
+    if (input.value.trim() === '') {
+      e.preventDefault();
+      input.parentElement.classList.add('shake');
+      setTimeout(() => {
+        input.parentElement.classList.remove('shake');
+      }, 500);
+    }
+  });
+});
+</script>
 </body>
 </html>
