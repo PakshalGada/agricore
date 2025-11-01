@@ -93,6 +93,126 @@ body {
   object-position: center; /* Keeps center of image focused */
 }
 
+/* ===== FEATURES SECTION ===== */
+.features-section {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.features-section h2 {
+  font-size: 2em;
+  margin-bottom: 25px;
+}
+
+.feature-cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  width: 250px;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: rgb(220, 255, 198);
+  font-size: 1.1em;
+  text-align: center;
+}
+
+/* ===== HOW IT WORKS SECTION ===== */
+.how-it-works {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.step {
+  width: 220px;
+  padding: 15px;
+  border: 2px solid black;
+  background: rgb(220, 255, 198);
+  border-radius: 10px;
+  font-size: 1.1em;
+}
+
+.tagline {
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* ===== WHY CHOOSE SECTION ===== */
+.why-choose {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  width: 200px;
+  padding: 20px;
+  border: 2px solid black;
+  background: rgb(235, 255, 210);
+  border-radius: 10px;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+/* ===== DEMO SECTION ===== */
+.demo-section {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.demo-image {
+  width: 70%;
+  max-width: 800px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 25px 0;
+  margin-top: 40px;
+  border-top: 2px solid black;
+}
+
+.footer-tagline {
+  margin-top: 6px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* ========= FADE-IN ANIMATION ========= */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 
 
 

@@ -15,9 +15,10 @@ DB_NAME = "users.db"
 def load_html(filename):
     path = os.path.join(TEMPLATE_DIR, filename)
     if os.path.exists(path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:  # ✅ UTF-8 decoding
             return f.read()
     return f"<h1>File {filename} not found</h1>"
+
 
 INDEX_HTML = load_html("index.html")
 LOGIN_HTML = load_html("login.html")
@@ -31,9 +32,10 @@ AICHATBOT_HTML = load_html("aiChatbot.html")
 def load_css(filename):
     path = os.path.join(STATIC_DIR, filename)
     if os.path.exists(path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:  # ✅ UTF-8 decoding
             return f.read()
     return ""
+
 
 STYLE_CSS = load_css("style.css")
 DASHBOARD_CSS = load_css("dashboard.css")
