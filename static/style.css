@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Courier New', Courier, monospace;
-    background-color: white;
+    background-color: rgb(234, 255, 221);
     color: black;
     line-height: 1.6;
 }
@@ -18,7 +18,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background-color: #ffffff;
+  background-color: rgb(220, 255, 198);
   border-color: black;
   border-style: solid;
 }
@@ -50,8 +50,47 @@ body {
 }
 
 .nav-btn:hover {
-  background-color: black;
-  color: white;
+  background-color: rgb(201, 255, 167);
+  color: rgb(0, 0, 0);
+}
+
+.headline {
+  text-align: center; /* Center the text */
+  padding: 20px; /* Add some padding around the content */
+  background-color: rgb(234, 255, 221); /* Light background color */
+}
+
+.headline h1 {
+  font-size: 2.5em; /* Larger font size for the headline */
+  color: #333; /* Darker color for the headline */
+  margin-bottom: 10px; /* Space below the headline */
+}
+
+.headline h2 {
+  font-size: 1.5em; /* Smaller font size for the subheadline */
+  color: #666; /* Lighter color for the subheadline */
+}
+
+.headline h3 {
+  font-size: 1em; /* Smaller font size for the subheadline */
+  color: #666; /* Lighter color for the subheadline */
+}
+
+
+/* Container to center the image */
+.image-container {
+  width: 80%;            /* Adjust size as needed */
+  height: 300px;         /* Set desired height for "landscape" view */
+  margin: 40px auto;     /* Centers the container horizontally */
+  overflow: hidden;      /* Cuts off overflow for a clean crop */
+  border-radius: 10px;   /* Optional: rounded corners */
+}
+
+.centered-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* Ensures the image fully fills landscape-style box */
+  object-position: center; /* Keeps center of image focused */
 }
 
 
