@@ -1,36 +1,234 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Agri Dashboard</title>
-  <link rel="stylesheet" href="/static/dashboard.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - AgriCore</title>
+<link rel="stylesheet" href="/static/dashboard.css">
 </head>
 <body>
-  <div class="dashboard-container">
-    <h1 class="dashboard-title">🌾 Welcome to Your Agri Dashboard</h1>
-    <p class="dashboard-subtitle">Choose a feature below to get started:</p>
+<nav class="navbar">
+<div class="logo">AgriCore</div>
+<div class="nav-links">
+<a href="/"><button class="nav-btn">Home</button></a>
+<a href="/login"><button class="nav-btn logout-btn">Logout</button></a>
+</div>
+</nav>
 
-    <div class="feature-grid">
+<div class="dashboard-container">
+<div class="header-section">
+        <h1 class="dashboard-title">Welcome to Your AgriCore Dashboard</h1>
+<p class="dashboard-subtitle">Choose a feature below to get started with smart farming</p>
+<div class="stats-bar">
+<div class="stat-item">
+<span class="stat-icon">📊</span>
+<span class="stat-number" data-target="127">0</span>
+<span class="stat-label">Active Users</span>
+</div>
+<div class="stat-item">
+<span class="stat-icon">🌱</span>
+<span class="stat-number" data-target="2453">0</span>
+<span class="stat-label">Crops Monitored</span>
+</div>
+<div class="stat-item">
+<span class="stat-icon">🎯</span>
+<span class="stat-number" data-target="98">0</span>
+<span class="stat-label">Accuracy %</span>
+</div>
+</div>
+</div>
 
-      <div class="feature-card">
-        <h2>🏪 Marketplace</h2>
-        <p>Buy and sell farming essentials like seeds, fertilizers, and tools with other farmers.</p>
-        <a href="/marketplace" class="feature-btn">Visit Marketplace</a>
-      </div>
+<div class="feature-grid">
+<div class="feature-card" data-index="0">
+<div class="card-icon">🏪</div>
+<div class="card-content">
+<h2>Marketplace</h2>
+<p>Buy and sell farming essentials like seeds, fertilizers, and tools with other farmers.</p>
+<div class="card-features">
+<span class="tag">Seeds</span>
+<span class="tag">Fertilizers</span>
+<span class="tag">Tools</span>
+</div>
+</div>
+<a href="/marketplace" class="feature-btn">
+<span>Visit Marketplace</span>
+<span class="btn-arrow">→</span>
+</a>
+</div>
 
-      <div class="feature-card">
-        <h2>🛰 Drone Scan & AI Insights</h2>
-        <p>Upload drone images to analyze crop health and get real-time AI insights.</p>
-        <a href="/droneScan" class="feature-btn">Open Drone Scan</a>
-      </div>
+<div class="feature-card" data-index="1">
+<div class="card-icon">🛰</div>
+<div class="card-content">
+<h2>Drone Scan & AI Insights</h2>
+<p>Upload drone images to analyze crop health and get real-time AI insights.</p>
+<div class="card-features">
+<span class="tag">AI Analysis</span>
+<span class="tag">Health Monitor</span>
+<span class="tag">Reports</span>
+</div>
+</div>
+<a href="/droneScan" class="feature-btn">
+<span>Open Drone Scan</span>
+<span class="btn-arrow">→</span>
+</a>
+</div>
 
-      <div class="feature-card">
-        <h2>🤖 AgriBot</h2>
-        <p>Chat with your AI farming assistant for personalized tips and crop guidance.</p>
-        <a href="/aiChatbot" class="feature-btn">Chat with AgriBot</a>
-      </div>
+<div class="feature-card" data-index="2">
+<div class="card-icon">🤖</div>
+<div class="card-content">
+<h2>AgriBot Assistant</h2>
+<p>Chat with your AI farming assistant for personalized tips and crop guidance.</p>
+<div class="card-features">
+<span class="tag">24/7 Support</span>
+<span class="tag">Expert Tips</span>
+<span class="tag">Guidance</span>
+</div>
+</div>
+<a href="/aiChatbot" class="feature-btn">
+<span>Chat with AgriBot</span>
+<span class="btn-arrow">→</span>
+</a>
+</div>
+</div>
 
-    </div>
-  </div>
+<div class="decorative-elements">
+<div class="float-item float-1">🌾</div>
+<div class="float-item float-2">🌻</div>
+<div class="float-item float-3">🍃</div>
+<div class="float-item float-4">🌿</div>
+</div>
+</div>
+
+<script>
+// Typing animation for dashboard title
+const dashboardTitle = document.querySelector('.dashboard-title');
+const titleText = dashboardTitle.textContent;
+dashboardTitle.textContent = '';
+let i = 0;
+
+function typeWriter() {
+  if (i < titleText.length) {
+    dashboardTitle.textContent += titleText.charAt(i);
+    i++;
+    setTimeout(typeWriter, 80);
+  }
+}
+
+setTimeout(typeWriter, 300);
+
+// Animate feature cards on load
+window.addEventListener('load', function() {
+  const cards = document.querySelectorAll('.feature-card');
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, index * 200 + 500);
+  });
+});
+
+// Counter animation for stats
+function animateCounter(element) {
+  const target = parseInt(element.getAttribute('data-target'));
+  const duration = 2000;
+  const increment = target / (duration / 16);
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(current);
+    }
+  }, 16);
+}
+
+// Start counter animation when page loads
+setTimeout(() => {
+  const counters = document.querySelectorAll('.stat-number');
+  counters.forEach(counter => animateCounter(counter));
+}, 1000);
+
+// Card hover effect with shadow movement
+const featureCards = document.querySelectorAll('.feature-card');
+featureCards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const angleX = (y - centerY) / 20;
+    const angleY = (centerX - x) / 20;
+    
+    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(0)`;
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// Button ripple effect
+const buttons = document.querySelectorAll('.feature-btn');
+buttons.forEach(button => {
+  button.addEventListener('click', function(e) {
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    this.appendChild(ripple);
+    
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// Floating elements animation
+window.addEventListener('load', function() {
+  const floatItems = document.querySelectorAll('.float-item');
+  floatItems.forEach((item, index) => {
+    setTimeout(() => {
+      item.style.opacity = '1';
+      item.style.transform = 'translateY(0)';
+    }, index * 150 + 1500);
+  });
+});
+
+// Add pulse animation to card icons on hover
+featureCards.forEach(card => {
+  const icon = card.querySelector('.card-icon');
+  card.addEventListener('mouseenter', () => {
+    icon.style.animation = 'pulse 0.5s ease-in-out';
+  });
+  card.addEventListener('mouseleave', () => {
+    icon.style.animation = 'none';
+  });
+});
+
+// Parallax effect for decorative elements
+document.addEventListener('mousemove', (e) => {
+  const floatItems = document.querySelectorAll('.float-item');
+  const mouseX = e.clientX / window.innerWidth;
+  const mouseY = e.clientY / window.innerHeight;
+  
+  floatItems.forEach((item, index) => {
+    const speed = (index + 1) * 20;
+    const x = (mouseX - 0.5) * speed;
+    const y = (mouseY - 0.5) * speed;
+    item.style.transform = `translate(${x}px, ${y}px)`;
+  });
+});
+</script>
 </body>
 </html>
-
