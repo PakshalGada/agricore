@@ -26,8 +26,7 @@ INDEX_HTML = open("template/index.html").read()
 LOGIN_HTML = open("template/login.html").read()
 REGISTER_HTML = open("template/register.html").read()
 STYLE_CSS = open("static/style.css").read()
-DASHBOARD_HTML=open("template/dashboard.html").read()
-DASHBOARD_CSS=open("static/dashboardStyle.css").read()
+
 
 def render(html, message="", msg_type=""):
     msg = f'<p class="message {msg_type}">{message}</p>' if message else ""
@@ -50,7 +49,7 @@ def login():
         conn.close()
 
         if row and check_password(row[0], password):
-            return render(DASHBOARD_HTML, f"Welcome back, {username}!", "success")
+            return render(INDEX_HTML, f"Welcome back, {username}!", "success")
         else:
             return render(LOGIN_HTML, "Invalid username or password.", "error")
     return render(LOGIN_HTML)
@@ -86,11 +85,7 @@ def css():
     response.headers['Content-Type'] = 'text/css'
     return response
     
-@app.route('/static/dashboardStyle.css')
-def dashboardCSS():
-    response = make_response(DASHBOARD_CSS)
-    response.headers['Content-Type'] = 'text/css'
-    return response
+
 
 import hashlib
 def generate_password_hash(pw):
