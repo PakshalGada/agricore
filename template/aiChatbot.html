@@ -1,19 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AgriBot</title>
-  <link rel="stylesheet" href="/static/aichatbot.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriBot - AgriCore</title>
+<link rel="stylesheet" href="/static/aichatbot.css">
 </head>
 <body>
-  <h1>🤖 AgriBot Chat</h1>
-  <div class="chat-container">
-    <div id="chat-box"></div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ask AgriBot..." required>
-      <button type="submit">Send</button>
-    </form>
-  </div>
-  <a href="/dashboard" class="feature-btn">Back to Dashboard</a>
+<nav class="navbar">
+<div class="logo">AgriCore</div>
+<div class="nav-links">
+<a href="/dashboard"><button class="nav-btn">Dashboard</button></a>
+<a href="/"><button class="nav-btn">Home</button></a>
+<a href="/login"><button class="nav-btn logout-btn">Logout</button></a>
+</div>
+</nav>
+
+<div class="chat-wrapper">
+<div class="chat-container">
+<div class="header-section">
+<h1 class="chat-title">🤖 AgriBot Assistant</h1>
+<p class="chat-subtitle">Your 24/7 AI farming companion for expert advice</p>
+<div class="status-indicator">
+<span class="status-dot"></span>
+<span class="status-text">Online & Ready</span>
+</div>
+</div>
+
+<div class="chat-box" id="chat-box">
+<div class="welcome-message">
+<div class="bot-avatar">🤖</div>
+<div class="message-content">
+<p><strong>AgriBot:</strong> Hello! I'm your AgriBot assistant. How can I help you with your farming today?</p>
+</div>
+</div>
+</div>
+
+<form id="chat-form" class="chat-input-area">
+<div class="input-wrapper">
+<input type="text" id="user-input" placeholder="Ask me anything about farming..." required autocomplete="off">
+<button type="submit" class="send-btn">
+<span class="send-text">Send</span>
+<span class="send-icon">➤</span>
+</button>
+</div>
+</form>
+
+<div class="quick-questions">
+<p class="quick-label">Quick Questions:</p>
+<div class="quick-buttons">
+<button class="quick-btn" data-question="What crops grow best in monsoon season?">🌧️ Monsoon Crops</button>
+<button class="quick-btn" data-question="How do I prevent pest infestations?">🐛 Pest Control</button>
+<button class="quick-btn" data-question="What's the best fertilizer for vegetables?">🌱 Fertilizers</button>
+<button class="quick-btn" data-question="How often should I water my crops?">💧 Watering Tips</button>
+</div>
+</div>
+</div>
+
+<div class="decorative-plants">
+<div class="plant plant-1">🌾</div>
+<div class="plant plant-2">🌿</div>
+<div class="plant plant-3">🍃</div>
+</div>
+</div>
+
+<script>
+const chatBox = document.getElementById('chat-box');
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const quickButtons = document.querySelectorAll('.quick-btn');
+
+// Typing animation for title
+const chatTitle = document.querySelector('.chat-title');
+const titleText = chatTitle.textContent;
+chatTitle.textContent = '';
+let i = 0;
+
+function typeWriter() {
+  if (i < titleText.length) {
+    chatTitle.textContent += titleText.charAt(i);
+    i++;
+    setTimeout(typeWriter, 80);
+  }
+}
+
+setTimeout(typeWriter, 300);
+
+// Animate plants on load
+window.addEventListener('load', function() {
+  const plants = document.querySelectorAll('.plant');
+  plants.forEach((plant, index) => {
+    setTimeout(() => {
+      plant.style.opacity = '1';
+      plant.style.transform = 'translateY(0)';
+    }, index * 200);
+  });
+});
+
+// Add user message to chat
+function addUserMessage(message) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'message user-message';
+  messageDiv.innerHTML = `
+    <div class="message-content">
+      <p><strong>You:</strong> ${message}</p>
+    </div>
+    <div class="user-avatar">👤</div>
+  `;
+  chatBox.appendChild(messageDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Add bot message with typing animation
+function addBotMessage(message) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'message bot-message';
+  messageDiv.innerHTML = `
+    <div class="bot-avatar">🤖</div>
+    <div class="message-content">
+      <p><strong>AgriBot:</strong> <span class="typing-text"></span></p>
+    </div>
+  `;
+  chatBox.appendChild(messageDiv);
+  
+  const typingText = messageDiv.querySelector('.typing-text');
+  let index = 0;
+  
+  function typeMessage() {
+    if (index < message.length) {
+      typingText.textContent += message.charAt(index);
+      index++;
+      chatBox.scrollTop = chatBox.scrollHeight;
+      setTimeout(typeMessage, 20);
+    }
+  }
+  
+  setTimeout(typeMessage, 500);
+}
+
+// Show typing indicator
+function showTypingIndicator() {
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'message bot-message typing-indicator';
+  typingDiv.id = 'typing-indicator';
+  typingDiv.innerHTML = `
+    <div class="bot-avatar">🤖</div>
+    <div class="message-content">
+      <div class="typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  `;
+  chatBox.appendChild(typingDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const indicator = document.getElementById('typing-indicator');
+  if (indicator) {
+    indicator.remove();
+  }
+}
+
+// Handle form submission
+chatForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const message = userInput.value.trim();
+  
+  if (message === '') return;
+  
+  // Add user message
+  addUserMessage(message);
+  userInput.value = '';
+  
+  // Show typing indicator
+  showTypingIndicator();
+  
+  // Simulate API call (replace with actual backend call)
+  setTimeout(() => {
+    removeTypingIndicator();
+    addBotMessage("I'm here to help! This is a demo response. Connect this to your backend API for real AI responses.");
+  }, 1500);
+});
+
+// Handle quick question buttons
+quickButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    const question = this.getAttribute('data-question');
+    userInput.value = question;
+    chatForm.dispatchEvent(new Event('submit'));
+  });
+});
+
+// Button ripple effect
+const sendBtn = document.querySelector('.send-btn');
+sendBtn.addEventListener('click', function(e) {
+  const ripple = document.createElement('span');
+  ripple.classList.add('ripple');
+  this.appendChild(ripple);
+  
+  const rect = this.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  
+  setTimeout(() => ripple.remove(), 600);
+});
+
+// Auto-resize input on focus
+userInput.addEventListener('focus', function() {
+  this.parentElement.classList.add('focused');
+});
+
+userInput.addEventListener('blur', function() {
+  if (this.value === '') {
+    this.parentElement.classList.remove('focused');
+  }
+});
+
+// Parallax effect for decorative plants
+document.addEventListener('mousemove', (e) => {
+  const plants = document.querySelectorAll('.plant');
+  const mouseX = e.clientX / window.innerWidth;
+  const mouseY = e.clientY / window.innerHeight;
+  
+  plants.forEach((plant, index) => {
+    const speed = (index + 1) * 15;
+    const x = (mouseX - 0.5) * speed;
+    const y = (mouseY - 0.5) * speed;
+    plant.style.transform = `translate(${x}px, ${y}px)`;
+  });
+});
+
+// Pulsing status dot animation
+const statusDot = document.querySelector('.status-dot');
+setInterval(() => {
+  statusDot.style.animation = 'none';
+  setTimeout(() => {
+    statusDot.style.animation = 'pulse 2s ease-in-out infinite';
+  }, 10);
+}, 2000);
+</script>
 </body>
 </html>
-
